@@ -7,7 +7,7 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = 'https://e74gi0vx46.execute-api.us-east-1.amazonaws.com/resnet152v2';
+  const API_URL = 'https://e74gi0vx46.execute-api.us-east-1.amazonaws.com/prod/resnet152v2';
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
