@@ -7,7 +7,7 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = "http://3.80.209.119:5000/predict";
+  const API_URL = "http://3.80.209.119:5000/predict"; // Flask EC2 endpoint
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -25,14 +25,9 @@ function App() {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("file", selectedFile); // key phải đúng như Flask backend yêu cầu
+      formData.append("file", selectedFile); // Phải đúng key "file" như backend yêu cầu
 
-      const response = await axios.post(API_URL, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const response = await axios.post(API_URL, formData); // KHÔNG set headers thủ công
       setPrediction(response.data);
     } catch (err) {
       setPrediction("Lỗi rồi: " + err.message);
