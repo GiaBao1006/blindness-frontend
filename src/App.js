@@ -7,7 +7,7 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = "http://resnet-alb-468059855.us-east-1.elb.amazonaws.com/predict"; // Flask EC2 endpoint
+  const API_URL = "https://predictvisionsolution.shop/predict"; // Flask EC2 endpoint
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
