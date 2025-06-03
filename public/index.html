@@ -4,8 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blindness Detection AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="max-w-4xl mx-auto py-12 px-4">
+      <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">
+         Blindness Prediction AI
+      </h1>
+
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <form id="uploadForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Upload retinal image</label>
+            <input type="file" id="fileInput" name="file" accept="image/*" class="mt-2 border border-gray-300 rounded w-full px-4 py-2" />
+          </div>
+
+          <div class="text-center">
+            <button
+              type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
+              Gửi Dự Đoán
+            </button>
+          </div>
+        </form>
+
+        <div id="result" class="mt-8 text-gray-800 text-lg"></div>
+        <div class="mt-6 text-center">
+          <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const uploadForm = document.getElementById("uploadForm");
+      const fileInput = document.getElementById("fileInput");
+      const resultDiv = document.getElementById("result");
+      const previewImage = document.getElementById("previewImage");
+
+      uploadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        // Hiển thị ảnh preview
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.classList.remove("hidden");
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        resultDiv.innerText = "Đang gửi ảnh và chờ kết quả...";
+
+        const res = await fetch("https://your-api-gateway.amazonaws.com/resnet152v2", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+        resultDiv.innerText = `🔍 Kết quả dự đoán:\n\n📊 Lớp: ${data.class}\n📈 Độ tin cậy: ${data.confidence.toFixed(4)}`;
+      });
+    </script>
   </body>
 </html>
