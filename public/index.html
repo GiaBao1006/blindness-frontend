@@ -1,69 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blindness Detection AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <div class="max-w-4xl mx-auto py-12 px-4">
-      <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">
-         Blindness Prediction AI
-      </h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blindness Prediction AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center font-sans">
+  <div class="w-full max-w-2xl bg-white rounded-lg shadow-xl p-8">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Blindness Prediction AI</h1>
 
-      <div class="bg-white rounded-lg shadow-lg p-8">
-        <form id="uploadForm" class="space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Upload retinal image</label>
-            <input type="file" id="fileInput" name="file" accept="image/*" class="mt-2 border border-gray-300 rounded w-full px-4 py-2" />
-          </div>
-
-          <div class="text-center">
-            <button
-              type="submit"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
-              Gửi Dự Đoán
-            </button>
-          </div>
-        </form>
-
-        <div id="result" class="mt-8 text-gray-800 text-lg"></div>
-        <div class="mt-6 text-center">
-          <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded" />
-        </div>
-      </div>
+    <!-- Nhập Email -->
+    <div id="emailSection" class="mb-8">
+      <label for="emailInput" class="block text-sm font-medium text-gray-700 mb-2">Nhập email để nhận kết quả:</label>
+      <input
+        type="email"
+        id="emailInput"
+        placeholder="you@example.com"
+        class="w-full border border-gray-300 px-4 py-2 rounded mb-2"
+      />
+      <button onclick="confirmEmail()" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        Xác nhận Email
+      </button>
+      <p id="emailError" class="text-red-500 mt-2 hidden">Vui lòng nhập đúng định dạng email.</p>
     </div>
 
-    <script>
-      const uploadForm = document.getElementById("uploadForm");
-      const fileInput = document.getElementById("fileInput");
-      const resultDiv = document.getElementById("result");
-      const previewImage = document.getElementById("previewImage");
+    <!-- Upload ảnh -->
+    <div id="uploadSection" class="hidden">
+      <form id="uploadForm" class="space-y-6">
+        <input type="hidden" id="emailHidden" name="email" />
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Upload retinal image:</label>
+          <input
+            type="file"
+            id="fileInput"
+            name="file"
+            accept="image/*"
+            class="w-full border border-gray-300 px-4 py-2 rounded"
+          />
+        </div>
+        <div class="text-center">
+          <button
+            type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
+            Gửi Dự Đoán
+          </button>
+        </div>
+      </form>
 
-      uploadForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      <div id="result" class="mt-8 text-lg text-gray-700 font-medium whitespace-pre-line"></div>
+      <div class="mt-6 text-center">
+        <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded border" />
+      </div>
+    </div>
+  </div>
 
-        const file = fileInput.files[0];
-        if (!file) return;
+  <script>
+    const emailSection = document.getElementById("emailSection");
+    const emailInput = document.getElementById("emailInput");
+    const emailError = document.getElementById("emailError");
+    const uploadSection = document.getElementById("uploadSection");
+    const emailHidden = document.getElementById("emailHidden");
 
-        // Hiển thị ảnh preview
-        previewImage.src = URL.createObjectURL(file);
-        previewImage.classList.remove("hidden");
+    function confirmEmail() {
+      const email = emailInput.value.trim();
+      const regex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
 
-        const formData = new FormData();
-        formData.append("file", file);
+      if (!regex.test(email)) {
+        emailError.classList.remove("hidden");
+        return;
+      }
 
-        resultDiv.innerText = "Đang gửi ảnh và chờ kết quả...";
+      emailHidden.value = email;
+      emailError.classList.add("hidden");
+      emailSection.classList.add("hidden");
+      uploadSection.classList.remove("hidden");
+    }
 
+    const uploadForm = document.getElementById("uploadForm");
+    const fileInput = document.getElementById("fileInput");
+    const resultDiv = document.getElementById("result");
+    const previewImage = document.getElementById("previewImage");
+
+    uploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      const email = emailHidden.value;
+
+      if (!file || !email) return;
+
+      previewImage.src = URL.createObjectURL(file);
+      previewImage.classList.remove("hidden");
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("email", email);
+
+      resultDiv.innerText = "⏳ Đang gửi ảnh và chờ kết quả...";
+
+      try {
         const res = await fetch("https://predictvisionsolution.shop/predict", {
           method: "POST",
           body: formData,
         });
 
         const data = await res.json();
-        resultDiv.innerText = `🔍 Kết quả dự đoán:\n\n📊 Lớp: ${data.class}\n📈 Độ tin cậy: ${data.confidence.toFixed(4)}`;
-      });
-    </script>
-  </body>
+
+        if (data.error) {
+          resultDiv.innerText = `❌ Lỗi: ${data.error}`;
+        } else {
+          resultDiv.innerHTML = `🔍 Kết quả dự đoán:\n\n📊 Lớp: ${data.class}\n📈 Độ tin cậy: ${data.confidence.toFixed(4)}`;
+        }
+      } catch (err) {
+        resultDiv.innerText = "🚫 Đã xảy ra lỗi khi gửi dự đoán.";
+      }
+    });
+  </script>
+</body>
 </html>
