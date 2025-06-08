@@ -1,66 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blindness Prediction AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; }
+    .step-active { background-color: #2563eb; color: white; }
+    .step-inactive { background-color: #e5e7eb; color: #6b7280; }
+    .file-upload::file-selector-button {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      transition: background 0.2s;
+    }
+    .file-upload::file-selector-button:hover {
+      background-color: #1e40af;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center font-sans">
-  <div class="w-full max-w-2xl bg-white rounded-lg shadow-xl p-8">
-    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Blindness Prediction AI</h1>
+<body class="bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen flex flex-col">
 
-    <!-- Nhập Email -->
-    <div id="emailSection" class="mb-8">
-      <label for="emailInput" class="block text-sm font-medium text-gray-700 mb-2">Nhập email để nhận kết quả:</label>
-      <input
-        type="email"
-        id="emailInput"
-        placeholder="you@example.com"
-        class="w-full border border-gray-300 px-4 py-2 rounded mb-2"
-      />
-      <button onclick="confirmEmail()" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
-        Xác nhận Email
-      </button>
-      <p id="emailError" class="text-red-500 mt-2 hidden">Vui lòng nhập đúng định dạng email.</p>
+  <!-- Header (chỉ hiện ở bước nhập email) -->
+  <header id="siteHeader" class="bg-blue-700 rounded-b-[3rem] sm:rounded-b-[5rem] px-6 pt-4 pb-8 flex items-center shadow-lg justify-between transition-all duration-300">
+    <div class="flex items-center gap-3">
+      <img src="hcmus-logo.jpg" alt="Logo Trường Đại học KHTN" class="h-12 sm:h-16 bg-white rounded-full shadow p-1" />
+      <span class="text-white text-xl sm:text-2xl font-bold tracking-wide">Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Thành phố Hồ Chí Minh</span>
     </div>
+  </header>
 
-    <!-- Upload ảnh -->
-    <div id="uploadSection" class="hidden">
-      <form id="uploadForm" class="space-y-6">
-        <input type="hidden" id="emailHidden" name="email" />
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Upload retinal image:</label>
-          <input
-            type="file"
-            id="fileInput"
-            name="file"
-            accept="image/*"
-            class="w-full border border-gray-300 px-4 py-2 rounded"
-          />
+  <!-- MAIN: Card AI ở giữa to đẹp -->
+  <main class="flex-1 flex items-center justify-center py-8">
+    <div class="w-full max-w-3xl bg-white/90 rounded-[2.5rem] shadow-2xl p-12 relative transition-all duration-200">
+      <!-- Nút Back absolute trên cùng bên trái -->
+      <button type="button"
+        id="backBtn"
+        onclick="goBackEmail()"
+        class="absolute top-8 left-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg shadow transition z-10 hidden">
+        ← Back
+      </button>
+      <!-- Hero AI retina icon -->
+      <div class="flex justify-center mb-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/3176/3176297.png" alt="Retina AI" class="w-24 h-24 drop-shadow-lg animate-pulse" />
+      </div>
+      <h1 class="text-5xl font-extrabold text-center text-blue-700 mb-3 tracking-wide drop-shadow-sm">Blindness Prediction AI</h1>
+      <p class="text-center text-gray-500 mb-10 text-lg">Nền tảng AI hỗ trợ dự đoán võng mạc dựa trên ảnh y khoa</p>
+      
+      <!-- Step Indicator -->
+      <div class="flex justify-center mb-10">
+        <div class="flex gap-2 items-center">
+          <div id="step1" class="rounded-full px-4 py-2 step-active font-bold shadow text-base transition">1. Nhập Email</div>
+          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <div id="step2" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">2. Upload ảnh</div>
+          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <div id="step3" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">3. Kết quả</div>
         </div>
-        <div class="text-center">
-          <button
-            type="submit"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
-            Gửi Dự Đoán
-          </button>
+      </div>
+      
+      <!-- Email Section -->
+      <div id="emailSection" class="mb-10 transition-all">
+        <label for="emailInput" class="block text-lg font-medium text-gray-700 mb-3">Nhập email để nhận kết quả:</label>
+        <input type="email" id="emailInput" placeholder="you@example.com" class="w-full border-2 border-blue-200 px-5 py-3 rounded-xl mb-3 focus:ring-2 focus:ring-blue-400 transition text-base" />
+        <button onclick="confirmEmail()" class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition font-semibold shadow mt-5 text-lg">
+          Xác nhận Email
+        </button>
+        <p id="emailError" class="text-red-500 mt-3 hidden text-base">Vui lòng nhập đúng định dạng email.</p>
+      </div>
+      
+      <!-- Upload Section -->
+      <div id="uploadSection" class="hidden transition-all">
+        <!-- Thông tin 5 lớp bệnh võng mạc -->
+        <div class="mb-8">
+          <h3 class="text-2xl font-bold text-center text-blue-600 mb-5">Phân loại 5 lớp bệnh võng mạc tiểu đường</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="bg-green-50 border-l-4 border-green-400 rounded-2xl p-5 shadow">
+              <div class="font-semibold text-green-700 mb-1 text-lg">No DR</div>
+              <div class="text-gray-700 text-base">Không phát hiện dấu hiệu bệnh võng mạc.</div>
+            </div>
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-5 shadow">
+              <div class="font-semibold text-yellow-700 mb-1 text-lg">Mild</div>
+              <div class="text-gray-700 text-base">Bệnh nhẹ, chỉ xuất hiện microaneurysm nhỏ.</div>
+            </div>
+            <div class="bg-orange-50 border-l-4 border-orange-400 rounded-2xl p-5 shadow">
+              <div class="font-semibold text-orange-700 mb-1 text-lg">Moderate</div>
+              <div class="text-gray-700 text-base">Có nhiều microaneurysm, xuất huyết, nhưng chưa lan rộng hoặc đe dọa thị lực.</div>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-400 rounded-2xl p-5 shadow">
+              <div class="font-semibold text-red-700 mb-1 text-lg">Severe</div>
+              <div class="text-gray-700 text-base">Tổn thương nặng, xuất huyết dày đặc hoặc tĩnh mạch bị dị dạng.</div>
+            </div>
+            <div class="bg-purple-50 border-l-4 border-purple-400 rounded-2xl p-5 shadow col-span-1 sm:col-span-2">
+              <div class="font-semibold text-purple-700 mb-1 text-lg">Proliferative DR</div>
+              <div class="text-gray-700 text-base">Giai đoạn nặng nhất: tăng sinh mạch máu mới, nguy cơ mất thị lực cao.</div>
+            </div>
+          </div>
         </div>
-      </form>
-
-      <div id="result" class="mt-8 text-lg text-gray-700 font-medium whitespace-pre-line"></div>
-      <div class="mt-6 text-center">
-        <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded border" />
+        <!-- Form upload -->
+        <form id="uploadForm" class="space-y-8">
+          <input type="hidden" id="emailHidden" name="email" />
+          <div>
+            <label class="block text-lg font-medium text-gray-700 mb-3">Upload retinal image:</label>
+            <input
+              type="file"
+              id="fileInput"
+              name="file"
+              accept="image/*"
+              class="w-full file-upload border-2 border-blue-200 px-5 py-3 rounded-xl text-base"
+            />
+          </div>
+          <div class="text-center">
+            <button
+              type="submit"
+              id="submitBtn"
+              class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition active:scale-95 w-full mt-3 text-xl"
+              >
+              Gửi Dự Đoán
+            </button>
+          </div>
+        </form>
+        <div class="mt-8 text-center">
+          <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded-xl border-2 shadow-lg" />
+        </div>
+        <div id="result" class="mt-10"></div>
       </div>
     </div>
-  </div>
+  </main>
 
+  <!-- Footer (chỉ hiện ở bước nhập email) -->
+  <footer id="siteFooter" class="bg-[#185adb] rounded-t-[3rem] sm:rounded-t-[5rem] px-6 py-7 text-center text-white shadow-inner transition-all duration-300">
+    <div class="text-lg">
+      © 2025 Khoa Điện tử - Viễn thông &nbsp; | &nbsp; Khóa luận AI Dự đoán võng mạc
+    </div>
+  </footer>
+
+  <!-- SCRIPT phần AI -->
   <script>
+    // Ẩn/hiện header footer tuỳ bước
+    function showHeaderFooter(show) {
+      document.getElementById('siteHeader').style.display = show ? '' : 'none';
+      document.getElementById('siteFooter').style.display = show ? '' : 'none';
+    }
+
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
     const emailSection = document.getElementById("emailSection");
     const emailInput = document.getElementById("emailInput");
     const emailError = document.getElementById("emailError");
     const uploadSection = document.getElementById("uploadSection");
     const emailHidden = document.getElementById("emailHidden");
+    const backBtn = document.getElementById("backBtn");
+
+    function setStep(active) {
+      [step1, step2, step3].forEach((el, idx) => {
+        if (active === idx+1) {
+          el.classList.remove("step-inactive");
+          el.classList.add("step-active");
+        } else {
+          el.classList.add("step-inactive");
+          el.classList.remove("step-active");
+        }
+      });
+    }
 
     function confirmEmail() {
       const email = emailInput.value.trim();
@@ -69,24 +174,34 @@
         emailError.classList.remove("hidden");
         return;
       }
-
       emailHidden.value = email;
       emailError.classList.add("hidden");
       emailSection.classList.add("hidden");
       uploadSection.classList.remove("hidden");
+      backBtn.classList.remove("hidden");
+      setStep(2);
+      showHeaderFooter(false); // Ẩn header/footer khi qua bước 2
+    }
+
+    function goBackEmail() {
+      uploadSection.classList.add("hidden");
+      emailSection.classList.remove("hidden");
+      backBtn.classList.add("hidden");
+      setStep(1);
+      showHeaderFooter(true); // Hiện lại header/footer khi quay lại bước 1
     }
 
     const uploadForm = document.getElementById("uploadForm");
     const fileInput = document.getElementById("fileInput");
     const resultDiv = document.getElementById("result");
     const previewImage = document.getElementById("previewImage");
+    const submitBtn = document.getElementById("submitBtn");
 
     uploadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const file = fileInput.files[0];
       const email = emailHidden.value;
-
       if (!file || !email) return;
 
       previewImage.src = URL.createObjectURL(file);
@@ -96,25 +211,45 @@
       formData.append("file", file);
       formData.append("email", email);
 
-      resultDiv.innerText = "⏳ Đang gửi ảnh và chờ kết quả...";
+      // Loading spinner
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<svg class="animate-spin mx-auto h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg> Đang gửi...`;
+      resultDiv.innerHTML = '';
 
       try {
         const res = await fetch("https://predictvisionsolution.shop/predict", {
           method: "POST",
           body: formData,
         });
-
         const data = await res.json();
 
+        setStep(3);
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Gửi Dự Đoán';
+
         if (data.error) {
-          resultDiv.innerText = `❌ Lỗi: ${data.error}`;
+          resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">❌ Lỗi: ${data.error}</div>`;
         } else {
-          resultDiv.innerHTML = `🔍 Kết quả dự đoán:\n\n📊 Lớp: ${data.class}\n📈 Độ tin cậy: ${data.confidence.toFixed(4)}`;
+          resultDiv.innerHTML = `
+          <div class="bg-green-50 border-2 border-green-200 rounded-2xl px-8 py-6 shadow-lg max-w-md mx-auto">
+            <h2 class="text-2xl font-extrabold text-green-700 mb-2">🔍 Kết quả dự đoán</h2>
+            <div class="text-lg font-medium text-gray-700 mb-1">📊 <span class="font-semibold">Lớp:</span> <span class="text-blue-800">${data.class}</span></div>
+            <div class="text-lg font-medium text-gray-700">📈 <span class="font-semibold">Độ tin cậy:</span> <span class="text-blue-700">${data.confidence.toFixed(4)}</span></div>
+          </div>`;
         }
       } catch (err) {
-        resultDiv.innerText = "🚫 Đã xảy ra lỗi khi gửi dự đoán.";
+        setStep(3);
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Gửi Dự Đoán';
+        resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">🚫 Đã xảy ra lỗi khi gửi dự đoán.</div>`;
       }
     });
+
+    // Khi load trang, header/footer luôn hiện vì mặc định ở bước 1
+    showHeaderFooter(true);
   </script>
 </body>
 </html>
