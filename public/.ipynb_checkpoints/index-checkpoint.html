@@ -26,17 +26,16 @@
 <body class="bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen flex flex-col">
 
   <!-- Header (chỉ hiện ở bước nhập email) -->
-  <header id="siteHeader" class="bg-blue-700 rounded-b-[3rem] sm:rounded-b-[5rem] px-4 sm:px-6 pt-4 pb-8 flex flex-col sm:flex-row items-start sm:items-center shadow-lg justify-between transition-all duration-300 relative">
-  <div class="flex items-center gap-3 mb-3 sm:mb-0">
+ <header id="siteHeader" class="bg-blue-700 rounded-b-[3rem] sm:rounded-b-[5rem] px-4 sm:px-6 pt-4 pb-8 flex flex-col sm:flex-row items-start sm:items-center shadow-lg justify-between transition-all duration-300">
+  <div class="flex items-center gap-3">
     <img src="hcmus-logo.jpg" alt="Logo Trường Đại học KHTN" class="h-12 sm:h-16 bg-white rounded-full shadow p-1" />
     <span class="text-white text-lg sm:text-2xl font-bold tracking-wide leading-snug">
       Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Thành phố Hồ Chí Minh
     </span>
   </div>
-  <!-- Nút About responsive -->
   <button
     onclick="openAbout()"
-    class="absolute right-4 top-4 sm:static ml-0 sm:ml-4 flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl text-white font-semibold shadow transition text-base sm:text-lg focus:outline-none"
+    class="mt-4 sm:mt-0 sm:ml-4 mr-8 sm:mr-20 flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl text-white font-semibold shadow transition text-base sm:text-lg focus:outline-none"
     style="z-index:10"
   >
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24">
@@ -46,6 +45,7 @@
     About
   </button>
 </header>
+    
 
 
   <!-- Modal About -->
