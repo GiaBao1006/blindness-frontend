@@ -60,37 +60,30 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- Main Section -->
   <main class="flex-1 flex items-center justify-center py-8">
     <div class="w-full max-w-3xl bg-white/90 rounded-[2.5rem] shadow-2xl p-12 relative transition-all duration-200">
 
-      <!-- Nút quay lại -->
-      <button type="button"
-        id="backBtn"
-        onclick="goBackEmail()"
-        class="absolute top-8 left-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg shadow transition z-10 hidden">
+      <button type="button" id="backBtn" onclick="goBackEmail()" class="absolute top-8 left-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg shadow transition z-10 hidden">
         ← Back
       </button>
 
-      <!-- Icon và tiêu đề -->
       <div class="flex justify-center mb-4">
         <img src="https://cdn-icons-png.flaticon.com/512/3176/3176297.png" alt="Retina AI" class="w-24 h-24 drop-shadow-lg animate-pulse" />
       </div>
       <h1 class="text-5xl font-extrabold text-center text-blue-700 mb-3 tracking-wide drop-shadow-sm">Blindness Prediction AI</h1>
       <p class="text-center text-gray-500 mb-10 text-lg">Nền tảng AI hỗ trợ dự đoán võng mạc dựa trên ảnh y khoa</p>
 
-      <!-- Các bước -->
       <div class="flex justify-center mb-10">
         <div class="flex gap-2 items-center">
           <div id="step1" class="rounded-full px-4 py-2 step-active font-bold shadow text-base transition">1. Nhập Email</div>
-          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <span class="text-gray-400 font-extrabold text-lg">→</span>
           <div id="step2" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">2. Upload ảnh</div>
-          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <span class="text-gray-400 font-extrabold text-lg">→</span>
           <div id="step3" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">3. Kết quả</div>
         </div>
       </div>
 
-      <!-- NHẬP EMAIL -->
       <div id="emailSection" class="mb-10 transition-all">
         <label for="emailInput" class="block text-lg font-medium text-gray-700 mb-3">Nhập email để nhận kết quả:</label>
         <input type="email" id="emailInput" placeholder="you@example.com" class="w-full border-2 border-blue-200 px-5 py-3 rounded-xl mb-3 focus:ring-2 focus:ring-blue-400 transition text-base" />
@@ -100,26 +93,15 @@
         <p id="emailError" class="text-red-500 mt-3 hidden text-base">Vui lòng nhập đúng định dạng email.</p>
       </div>
 
-      <!-- UPLOAD IMAGE -->
       <div id="uploadSection" class="hidden transition-all">
         <form id="uploadForm" class="space-y-8">
           <input type="hidden" id="emailHidden" name="email" />
           <div>
             <label class="block text-lg font-medium text-gray-700 mb-3">Chọn ảnh võng mạc:</label>
-            <input
-              type="file"
-              id="fileInput"
-              name="file"
-              accept="image/*"
-              class="w-full file-upload border-2 border-blue-200 px-5 py-3 rounded-xl text-base"
-            />
+            <input type="file" id="fileInput" name="file" accept="image/*" class="w-full file-upload border-2 border-blue-200 px-5 py-3 rounded-xl text-base" />
           </div>
           <div class="text-center">
-            <button
-              type="submit"
-              id="submitBtn"
-              class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition active:scale-95 w-full mt-3 text-xl"
-              >
+            <button type="submit" id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition active:scale-95 w-full mt-3 text-xl">
               Gửi Dự Đoán
             </button>
           </div>
@@ -129,33 +111,22 @@
         </div>
         <div id="result" class="mt-10"></div>
       </div>
+
     </div>
   </main>
 
-  <!-- Footer -->
   <footer id="siteFooter" class="bg-[#185adb] rounded-t-[3rem] sm:rounded-t-[5rem] px-6 py-7 text-center text-white shadow-inner transition-all duration-300">
-    <div class="text-lg">
-      © 2025 Khoa Điện tử - Viễn thông &nbsp; | &nbsp; Khóa luận AI Dự đoán võng mạc
-    </div>
+    <div class="text-lg">© 2025 Khoa Điện tử - Viễn thông | Khóa luận AI Dự đoán võng mạc</div>
   </footer>
 
-  <!-- SCRIPT -->
   <script>
-    // Modal About
-    function openAbout() {
-      document.getElementById('aboutModal').classList.remove('hidden');
-    }
-    function closeAbout() {
-      document.getElementById('aboutModal').classList.add('hidden');
-    }
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeAbout();
-    });
+    function openAbout() { document.getElementById('aboutModal').classList.remove('hidden'); }
+    function closeAbout() { document.getElementById('aboutModal').classList.add('hidden'); }
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout(); });
     document.getElementById('aboutModal').addEventListener('click', e => {
       if (e.target === e.currentTarget) closeAbout();
     });
 
-    // UI Steps
     function showHeaderFooter(show) {
       document.getElementById('siteHeader').style.display = show ? '' : 'none';
       document.getElementById('siteFooter').style.display = show ? '' : 'none';
@@ -173,7 +144,7 @@
 
     function setStep(active) {
       [step1, step2, step3].forEach((el, idx) => {
-        if (active === idx+1) {
+        if (active === idx + 1) {
           el.classList.remove("step-inactive");
           el.classList.add("step-active");
         } else {
@@ -214,16 +185,15 @@
     const submitBtn = document.getElementById("submitBtn");
 
     const classDescriptions = {
-      "0": { name: "No DR", desc: "Không phát hiện dấu hiệu bệnh võng mạc.", advice: "Hãy kiểm tra định kỳ để duy trì sức khỏe mắt." },
-      "1": { name: "Mild", desc: "Bệnh nhẹ, chỉ xuất hiện microaneurysm nhỏ.", advice: "Nên khám chuyên khoa mắt để theo dõi sát hơn." },
-      "2": { name: "Moderate", desc: "Có nhiều microaneurysm, xuất huyết, nhưng chưa lan rộng hoặc đe dọa thị lực.", advice: "Cần điều trị sớm để ngăn ngừa tiến triển bệnh." },
-      "3": { name: "Severe", desc: "Tổn thương nặng, xuất huyết dày đặc hoặc tĩnh mạch bị dị dạng.", advice: "Nên điều trị ngay để bảo vệ thị lực." },
-      "4": { name: "Proliferative DR", desc: "Giai đoạn nặng nhất: tăng sinh mạch máu mới, nguy cơ mất thị lực cao.", advice: "Cần can thiệp y tế khẩn cấp và điều trị chuyên sâu." }
+      "0": { name: "No DR", desc: "Không phát hiện dấu hiệu bệnh võng mạc." },
+      "1": { name: "Mild", desc: "Bệnh nhẹ, chỉ xuất hiện microaneurysm nhỏ." },
+      "2": { name: "Moderate", desc: "Có nhiều microaneurysm, xuất huyết, nhưng chưa lan rộng hoặc đe dọa thị lực." },
+      "3": { name: "Severe", desc: "Tổn thương nặng, xuất huyết dày đặc hoặc tĩnh mạch bị dị dạng." },
+      "4": { name: "Proliferative DR", desc: "Giai đoạn nặng nhất: tăng sinh mạch máu mới, nguy cơ mất thị lực cao." }
     };
 
     uploadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-
       const file = fileInput.files[0];
       const email = emailHidden.value;
       if (!file || !email) return;
@@ -236,16 +206,13 @@
       formData.append("email", email);
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<svg class="animate-spin mx-auto h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-      </svg> Đang gửi...`;
+      submitBtn.innerHTML = `Đang gửi...`;
       resultDiv.innerHTML = '';
 
       try {
         const res = await fetch("https://predictvisionsolution.shop/predict", {
           method: "POST",
-          body: formData,
+          body: formData
         });
         const data = await res.json();
 
@@ -256,17 +223,15 @@
         if (data.error) {
           resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">❌ Lỗi: ${data.error}</div>`;
         } else {
-          const info = classDescriptions[data.class] || { name: data.class, desc: "Không rõ mô tả", advice: "" };
+          const info = classDescriptions[data.class] || { name: data.class, desc: "Không rõ mô tả" };
           resultDiv.innerHTML = `
             <div class="bg-green-50 border-2 border-green-200 rounded-2xl px-8 py-6 shadow-lg max-w-md mx-auto">
               <h2 class="text-2xl font-extrabold text-green-700 mb-2">🔍 Kết quả dự đoán</h2>
               <div class="text-xl font-bold text-blue-800 mb-2">📊 ${info.name}</div>
               <div class="text-gray-700 text-base mb-3">${info.desc}</div>
-              <div class="text-lg font-medium text-gray-700 mb-2">
-                📈 <span class="font-semibold">Độ tin cậy:</span> <span class="text-blue-700">${(data.confidence * 100).toFixed(1)}%</span>
-              </div>
-              <div class="text-base text-gray-700 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl mt-3">
-                💡 <strong>Lời khuyên:</strong> ${info.advice}
+              <div class="text-lg font-medium text-gray-700">
+                📈 <span class="font-semibold">Độ tin cậy:</span>
+                <span class="text-blue-700">${data.confidence ? (data.confidence * 100).toFixed(1) + '%' : ''}</span>
               </div>
             </div>`;
         }
