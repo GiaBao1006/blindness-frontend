@@ -25,223 +25,260 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen flex flex-col">
 
-<header id="siteHeader" class="bg-blue-700 rounded-b-[3rem] sm:rounded-b-[5rem] px-4 sm:px-6 pt-4 pb-8 flex flex-col sm:flex-row items-start sm:items-center shadow-lg justify-between transition-all duration-300">
-  <div class="flex items-center gap-3">
-    <img src="hcmus-logo.jpg" alt="Logo Trường Đại học KHTN" class="h-16 sm:h-20 bg-white rounded-full shadow p-2" />
-    <span class="text-white text-lg sm:text-2xl font-bold tracking-wide leading-snug">
-      Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Thành phố Hồ Chí Minh
-    </span>
-  </div>
-  <button onclick="openAbout()" class="mt-4 sm:mt-0 sm:ml-4 mr-8 sm:mr-20 flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl text-white font-semibold shadow transition text-base sm:text-lg focus:outline-none" style="z-index:10">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-      <text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor" font-family="Arial" dy="-1">?</text>
-    </svg>
-    About
-  </button>
-</header>
-
-<div id="aboutModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-2xl shadow-2xl px-10 py-8 w-full max-w-md relative">
-    <button onclick="closeAbout()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-2xl font-bold focus:outline-none">&times;</button>
-    <h2 class="text-2xl font-extrabold text-blue-700 mb-3 text-center">Thông tin sinh viên thực hiện</h2>
-    <div class="space-y-3 text-lg text-gray-700">
-      <div><span class="font-semibold">Họ tên:</span> Nguyễn Gia Bảo</div>
-      <div><span class="font-semibold">MSSV:</span> 21200269</div>
-      <div><span class="font-semibold">SĐT:</span> 0903190727</div>
-      <div><span class="font-semibold">Email:</span> giabao.100603@gmail.com</div>
-      <div><span class="font-semibold">GVHD:</span> ThS. Dư Quốc Thành</div>
+  <!-- Header -->
+  <header id="siteHeader" class="bg-blue-700 rounded-b-[3rem] sm:rounded-b-[5rem] px-4 sm:px-6 pt-4 pb-8 flex flex-col sm:flex-row items-start sm:items-center shadow-lg justify-between transition-all duration-300">
+    <div class="flex items-center gap-3">
+      <img src="hcmus-logo.jpg" alt="Logo Trường Đại học KHTN" class="h-16 sm:h-20 bg-white rounded-full shadow p-2" />
+      <span class="text-white text-lg sm:text-2xl font-bold tracking-wide leading-snug">
+        Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Thành phố Hồ Chí Minh
+      </span>
     </div>
-  </div>
-</div>
+    <button
+      onclick="openAbout()"
+      class="mt-4 sm:mt-0 sm:ml-4 mr-8 sm:mr-20 flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-2 rounded-xl text-white font-semibold shadow transition text-base sm:text-lg focus:outline-none"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        <text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor" font-family="Arial" dy="-1">?</text>
+      </svg>
+      About
+    </button>
+  </header>
 
-<main class="flex-1 flex items-center justify-center py-8">
-  <div class="w-full max-w-3xl bg-white/90 rounded-[2.5rem] shadow-2xl p-12 relative transition-all duration-200">
-
-    <button type="button" id="backBtn" onclick="goBackEmail()" class="absolute top-8 left-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg shadow transition z-10 hidden">← Back</button>
-
-    <div class="flex justify-center mb-4">
-      <img src="https://cdn-icons-png.flaticon.com/512/3176/3176297.png" alt="Retina AI" class="w-24 h-24 drop-shadow-lg animate-pulse" />
-    </div>
-
-    <h1 class="text-5xl font-extrabold text-center text-blue-700 mb-3 tracking-wide drop-shadow-sm">Blindness Prediction AI</h1>
-    <p class="text-center text-gray-500 mb-10 text-lg">Nền tảng AI hỗ trợ dự đoán võng mạc dựa trên ảnh y khoa</p>
-
-    <div class="flex justify-center mb-10">
-      <div class="flex gap-2 items-center">
-        <div id="step1" class="rounded-full px-4 py-2 step-active font-bold shadow text-base transition">1. Nhập Email</div>
-        <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
-        <div id="step2" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">2. Upload ảnh</div>
-        <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
-        <div id="step3" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">3. Kết quả</div>
+  <!-- Modal About -->
+  <div id="aboutModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl px-10 py-8 w-full max-w-xl relative">
+      <button onclick="closeAbout()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-2xl font-bold focus:outline-none">&times;</button>
+      <h2 class="text-2xl font-extrabold text-blue-700 mb-3 text-center">Thông tin sinh viên thực hiện</h2>
+      <div class="space-y-3 text-lg text-gray-700">
+        <div><span class="font-semibold">Họ tên:</span> Nguyễn Gia Bảo</div>
+        <div><span class="font-semibold">MSSV:</span> 21200269</div>
+        <div><span class="font-semibold">SĐT:</span> 0903190727</div>
+        <div><span class="font-semibold">Email:</span> giabao.100603@gmail.com</div>
+        <div><span class="font-semibold">GVHD:</span> ThS. Dư Quốc Thành</div>
       </div>
     </div>
+  </div>
 
-    <div id="emailSection" class="mb-10 transition-all">
-      <label for="emailInput" class="block text-lg font-medium text-gray-700 mb-3">Nhập email để nhận kết quả:</label>
-      <input type="email" id="emailInput" placeholder="you@example.com" class="w-full border-2 border-blue-200 px-5 py-3 rounded-xl mb-3 focus:ring-2 focus:ring-blue-400 transition text-base" />
-      <button onclick="confirmEmail()" class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition font-semibold shadow mt-5 text-lg">Xác nhận Email</button>
-      <p id="emailError" class="text-red-500 mt-3 hidden text-base">Vui lòng nhập đúng định dạng email.</p>
-    </div>
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 flex items-center justify-center py-8">
+    <div class="w-full max-w-3xl bg-white/90 rounded-[2.5rem] shadow-2xl p-12 relative transition-all duration-200">
 
-    <div id="uploadSection" class="hidden transition-all">
-      <h3 class="text-2xl font-bold text-center text-blue-600 mb-5">Phân loại 5 lớp bệnh võng mạc tiểu đường</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
-        <div class="bg-green-50 border-l-4 border-green-400 rounded-2xl p-5 shadow">
-          <div class="font-semibold text-green-700 mb-1 text-lg">No DR</div>
-          <div class="text-gray-700 text-base">Không phát hiện dấu hiệu bệnh võng mạc.</div>
-        </div>
-        <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl p-5 shadow">
-          <div class="font-semibold text-yellow-700 mb-1 text-lg">Mild</div>
-          <div class="text-gray-700 text-base">Bệnh nhẹ, chỉ xuất hiện microaneurysm nhỏ.</div>
-        </div>
-        <div class="bg-orange-50 border-l-4 border-orange-400 rounded-2xl p-5 shadow">
-          <div class="font-semibold text-orange-700 mb-1 text-lg">Moderate</div>
-          <div class="text-gray-700 text-base">Có nhiều microaneurysm, xuất huyết, nhưng chưa lan rộng hoặc đe dọa thị lực.</div>
-        </div>
-        <div class="bg-red-50 border-l-4 border-red-400 rounded-2xl p-5 shadow">
-          <div class="font-semibold text-red-700 mb-1 text-lg">Severe</div>
-          <div class="text-gray-700 text-base">Tổn thương nặng, xuất huyết dày đặc hoặc tĩnh mạch bị dị dạng.</div>
-        </div>
-        <div class="bg-purple-50 border-l-4 border-purple-400 rounded-2xl p-5 shadow col-span-1 sm:col-span-2">
-          <div class="font-semibold text-purple-700 mb-1 text-lg">Proliferative DR</div>
-          <div class="text-gray-700 text-base">Giai đoạn nặng nhất: tăng sinh mạch máu mới, nguy cơ mất thị lực cao.</div>
+      <!-- Nút quay lại -->
+      <button type="button"
+        id="backBtn"
+        onclick="goBackEmail()"
+        class="absolute top-8 left-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg shadow transition z-10 hidden">
+        ← Back
+      </button>
+
+      <!-- Icon và tiêu đề -->
+      <div class="flex justify-center mb-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/3176/3176297.png" alt="Retina AI" class="w-24 h-24 drop-shadow-lg animate-pulse" />
+      </div>
+      <h1 class="text-5xl font-extrabold text-center text-blue-700 mb-3 tracking-wide drop-shadow-sm">Blindness Prediction AI</h1>
+      <p class="text-center text-gray-500 mb-10 text-lg">Nền tảng AI hỗ trợ dự đoán võng mạc dựa trên ảnh y khoa</p>
+
+      <!-- Các bước -->
+      <div class="flex justify-center mb-10">
+        <div class="flex gap-2 items-center">
+          <div id="step1" class="rounded-full px-4 py-2 step-active font-bold shadow text-base transition">1. Nhập Email</div>
+          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <div id="step2" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">2. Upload ảnh</div>
+          <span class="text-gray-400 font-extrabold text-lg">&rarr;</span>
+          <div id="step3" class="rounded-full px-4 py-2 step-inactive font-bold text-base transition">3. Kết quả</div>
         </div>
       </div>
 
-      <form id="uploadForm" class="space-y-8">
-        <input type="hidden" id="emailHidden" name="email" />
-        <div>
-          <label class="block text-lg font-medium text-gray-700 mb-3">Chọn ảnh võng mạc:</label>
-          <input type="file" id="fileInput" name="file" accept="image/*" class="w-full file-upload border-2 border-blue-200 px-5 py-3 rounded-xl text-base" />
-        </div>
-        <div class="text-center">
-          <button type="submit" id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition active:scale-95 w-full mt-3 text-xl">Gửi Dự Đoán</button>
-        </div>
-      </form>
-      <div class="mt-8 text-center">
-        <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded-xl border-2 shadow-lg" />
+      <!-- NHẬP EMAIL -->
+      <div id="emailSection" class="mb-10 transition-all">
+        <label for="emailInput" class="block text-lg font-medium text-gray-700 mb-3">Nhập email để nhận kết quả:</label>
+        <input type="email" id="emailInput" placeholder="you@example.com" class="w-full border-2 border-blue-200 px-5 py-3 rounded-xl mb-3 focus:ring-2 focus:ring-blue-400 transition text-base" />
+        <button onclick="confirmEmail()" class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition font-semibold shadow mt-5 text-lg">
+          Xác nhận Email
+        </button>
+        <p id="emailError" class="text-red-500 mt-3 hidden text-base">Vui lòng nhập đúng định dạng email.</p>
       </div>
-      <div id="result" class="mt-10"></div>
+
+      <!-- UPLOAD IMAGE -->
+      <div id="uploadSection" class="hidden transition-all">
+        <form id="uploadForm" class="space-y-8">
+          <input type="hidden" id="emailHidden" name="email" />
+          <div>
+            <label class="block text-lg font-medium text-gray-700 mb-3">Chọn ảnh võng mạc:</label>
+            <input
+              type="file"
+              id="fileInput"
+              name="file"
+              accept="image/*"
+              class="w-full file-upload border-2 border-blue-200 px-5 py-3 rounded-xl text-base"
+            />
+          </div>
+          <div class="text-center">
+            <button
+              type="submit"
+              id="submitBtn"
+              class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition active:scale-95 w-full mt-3 text-xl"
+              >
+              Gửi Dự Đoán
+            </button>
+          </div>
+        </form>
+        <div class="mt-8 text-center">
+          <img id="previewImage" src="" alt="Preview" class="mx-auto hidden max-h-80 rounded-xl border-2 shadow-lg" />
+        </div>
+        <div id="result" class="mt-10"></div>
+      </div>
     </div>
-  </div>
-</main>
+  </main>
 
-<footer id="siteFooter" class="bg-[#185adb] rounded-t-[3rem] sm:rounded-t-[5rem] px-6 py-7 text-center text-white shadow-inner transition-all duration-300">
-  <div class="text-lg">© 2025 Khoa Điện tử - Viễn thông &nbsp; | &nbsp; Khóa luận AI Dự đoán võng mạc</div>
-</footer>
+  <!-- Footer -->
+  <footer id="siteFooter" class="bg-[#185adb] rounded-t-[3rem] sm:rounded-t-[5rem] px-6 py-7 text-center text-white shadow-inner transition-all duration-300">
+    <div class="text-lg">
+      © 2025 Khoa Điện tử - Viễn thông &nbsp; | &nbsp; Khóa luận AI Dự đoán võng mạc
+    </div>
+  </footer>
 
-<script>
-  function openAbout() {
-    document.getElementById('aboutModal').classList.remove('hidden');
-  }
-  function closeAbout() {
-    document.getElementById('aboutModal').classList.add('hidden');
-  }
+  <!-- SCRIPT -->
+  <script>
+    // Modal About
+    function openAbout() {
+      document.getElementById('aboutModal').classList.remove('hidden');
+    }
+    function closeAbout() {
+      document.getElementById('aboutModal').classList.add('hidden');
+    }
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAbout();
+    });
+    document.getElementById('aboutModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeAbout();
+    });
 
-  function showHeaderFooter(show) {
-    document.getElementById('siteHeader').style.display = show ? '' : 'none';
-    document.getElementById('siteFooter').style.display = show ? '' : 'none';
-  }
+    // UI Steps
+    function showHeaderFooter(show) {
+      document.getElementById('siteHeader').style.display = show ? '' : 'none';
+      document.getElementById('siteFooter').style.display = show ? '' : 'none';
+    }
 
-  const step1 = document.getElementById('step1');
-  const step2 = document.getElementById('step2');
-  const step3 = document.getElementById('step3');
-  const emailSection = document.getElementById("emailSection");
-  const emailInput = document.getElementById("emailInput");
-  const emailError = document.getElementById("emailError");
-  const uploadSection = document.getElementById("uploadSection");
-  const emailHidden = document.getElementById("emailHidden");
-  const backBtn = document.getElementById("backBtn");
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const emailSection = document.getElementById("emailSection");
+    const emailInput = document.getElementById("emailInput");
+    const emailError = document.getElementById("emailError");
+    const uploadSection = document.getElementById("uploadSection");
+    const emailHidden = document.getElementById("emailHidden");
+    const backBtn = document.getElementById("backBtn");
 
-  function setStep(active) {
-    [step1, step2, step3].forEach((el, idx) => {
-      if (active === idx+1) {
-        el.classList.remove("step-inactive");
-        el.classList.add("step-active");
-      } else {
-        el.classList.add("step-inactive");
-        el.classList.remove("step-active");
+    function setStep(active) {
+      [step1, step2, step3].forEach((el, idx) => {
+        if (active === idx+1) {
+          el.classList.remove("step-inactive");
+          el.classList.add("step-active");
+        } else {
+          el.classList.add("step-inactive");
+          el.classList.remove("step-active");
+        }
+      });
+    }
+
+    function confirmEmail() {
+      const email = emailInput.value.trim();
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regex.test(email)) {
+        emailError.classList.remove("hidden");
+        return;
+      }
+      emailHidden.value = email;
+      emailError.classList.add("hidden");
+      emailSection.classList.add("hidden");
+      uploadSection.classList.remove("hidden");
+      backBtn.classList.remove("hidden");
+      setStep(2);
+      showHeaderFooter(false);
+    }
+
+    function goBackEmail() {
+      uploadSection.classList.add("hidden");
+      emailSection.classList.remove("hidden");
+      backBtn.classList.add("hidden");
+      setStep(1);
+      showHeaderFooter(true);
+    }
+
+    const uploadForm = document.getElementById("uploadForm");
+    const fileInput = document.getElementById("fileInput");
+    const resultDiv = document.getElementById("result");
+    const previewImage = document.getElementById("previewImage");
+    const submitBtn = document.getElementById("submitBtn");
+
+    const classDescriptions = {
+      "0": { name: "No DR", desc: "Không phát hiện dấu hiệu bệnh võng mạc.", advice: "Hãy kiểm tra định kỳ để duy trì sức khỏe mắt." },
+      "1": { name: "Mild", desc: "Bệnh nhẹ, chỉ xuất hiện microaneurysm nhỏ.", advice: "Nên khám chuyên khoa mắt để theo dõi sát hơn." },
+      "2": { name: "Moderate", desc: "Có nhiều microaneurysm, xuất huyết, nhưng chưa lan rộng hoặc đe dọa thị lực.", advice: "Cần điều trị sớm để ngăn ngừa tiến triển bệnh." },
+      "3": { name: "Severe", desc: "Tổn thương nặng, xuất huyết dày đặc hoặc tĩnh mạch bị dị dạng.", advice: "Nên điều trị ngay để bảo vệ thị lực." },
+      "4": { name: "Proliferative DR", desc: "Giai đoạn nặng nhất: tăng sinh mạch máu mới, nguy cơ mất thị lực cao.", advice: "Cần can thiệp y tế khẩn cấp và điều trị chuyên sâu." }
+    };
+
+    uploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      const email = emailHidden.value;
+      if (!file || !email) return;
+
+      previewImage.src = URL.createObjectURL(file);
+      previewImage.classList.remove("hidden");
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("email", email);
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<svg class="animate-spin mx-auto h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg> Đang gửi...`;
+      resultDiv.innerHTML = '';
+
+      try {
+        const res = await fetch("https://predictvisionsolution.shop/predict", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+
+        setStep(3);
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Gửi Dự Đoán';
+
+        if (data.error) {
+          resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">❌ Lỗi: ${data.error}</div>`;
+        } else {
+          const info = classDescriptions[data.class] || { name: data.class, desc: "Không rõ mô tả", advice: "" };
+          resultDiv.innerHTML = `
+            <div class="bg-green-50 border-2 border-green-200 rounded-2xl px-8 py-6 shadow-lg max-w-md mx-auto">
+              <h2 class="text-2xl font-extrabold text-green-700 mb-2">🔍 Kết quả dự đoán</h2>
+              <div class="text-xl font-bold text-blue-800 mb-2">📊 ${info.name}</div>
+              <div class="text-gray-700 text-base mb-3">${info.desc}</div>
+              <div class="text-lg font-medium text-gray-700 mb-2">
+                📈 <span class="font-semibold">Độ tin cậy:</span> <span class="text-blue-700">${(data.confidence * 100).toFixed(1)}%</span>
+              </div>
+              <div class="text-base text-gray-700 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl mt-3">
+                💡 <strong>Lời khuyên:</strong> ${info.advice}
+              </div>
+            </div>`;
+        }
+      } catch (err) {
+        setStep(3);
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Gửi Dự Đoán';
+        resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">🚫 Đã xảy ra lỗi khi gửi dự đoán.</div>`;
       }
     });
-  }
 
-  function confirmEmail() {
-    const email = emailInput.value.trim();
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(email)) {
-      emailError.classList.remove("hidden");
-      return;
-    }
-    emailHidden.value = email;
-    emailError.classList.add("hidden");
-    emailSection.classList.add("hidden");
-    uploadSection.classList.remove("hidden");
-    backBtn.classList.remove("hidden");
-    setStep(2);
-    showHeaderFooter(false);
-  }
-
-  function goBackEmail() {
-    uploadSection.classList.add("hidden");
-    emailSection.classList.remove("hidden");
-    backBtn.classList.add("hidden");
-    setStep(1);
     showHeaderFooter(true);
-  }
-
-  const uploadForm = document.getElementById("uploadForm");
-  const fileInput = document.getElementById("fileInput");
-  const resultDiv = document.getElementById("result");
-  const previewImage = document.getElementById("previewImage");
-  const submitBtn = document.getElementById("submitBtn");
-
-  uploadForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const file = fileInput.files[0];
-    const email = emailHidden.value;
-    if (!file || !email) return;
-    previewImage.src = URL.createObjectURL(file);
-    previewImage.classList.remove("hidden");
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("email", email);
-
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<svg class="animate-spin mx-auto h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> Đang gửi...`;
-    resultDiv.innerHTML = '';
-
-    try {
-      const res = await fetch("https://predictvisionsolution.shop/predict", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      setStep(3);
-      submitBtn.disabled = false;
-      submitBtn.innerText = 'Gửi Dự Đoán';
-
-      if (data.error) {
-        resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">❌ Lỗi: ${data.error}</div>`;
-      } else {
-        const confidenceText = data.confidence ? (data.confidence * 100).toFixed(1) + '%' : '';
-        resultDiv.innerHTML = `
-          <div class="bg-green-50 border-2 border-green-200 rounded-2xl px-8 py-6 shadow-lg max-w-md mx-auto">
-            <h2 class="text-2xl font-extrabold text-green-700 mb-2">🔍 Kết quả dự đoán</h2>
-            <div class="text-xl font-bold text-blue-800 mb-2">📊 ${data.class}</div>
-            <div class="text-lg font-medium text-gray-700">📈 <span class="font-semibold">Độ tin cậy:</span> <span class="text-blue-700">${confidenceText}</span></div>
-          </div>`;
-      }
-    } catch (err) {
-      setStep(3);
-      submitBtn.disabled = false;
-      submitBtn.innerText = 'Gửi Dự Đoán';
-      resultDiv.innerHTML = `<div class="bg-red-100 text-red-700 rounded-xl px-6 py-4 shadow font-bold text-lg">🚫 Đã xảy ra lỗi khi gửi dự đoán.</div>`;
-    }
-  });
-
-  showHeaderFooter(true);
-</script>
+  </script>
 </body>
 </html>
